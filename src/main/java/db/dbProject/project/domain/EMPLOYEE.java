@@ -9,29 +9,27 @@ import java.sql.Date;
 public class EMPLOYEE {
 
 
-    private String Fname;
-    private String Lname;
+    private String Name;
     private String Ssn;
     private Date Bdate;
     private String Address;
     private String Sex;
     private Double Salary;
-    private String Super_ssn;
-    private Integer Dno;
+    private String Super_Name;
+    private String Dno;
 
 
     public EMPLOYEE(){
 
     }
-    public EMPLOYEE(String Fname, String Lname, String Ssn, Date Bdate, String Address, String Sex, Double Salary, String Super_ssn, Integer Dno){
-        this.Fname  = Fname;
-        this.Lname = Lname;
+    public EMPLOYEE(String Name,  String Ssn, Date Bdate, String Address, String Sex, Double Salary, String Super_Name, String Dno){
+        this.Name  = Name;
         this.Ssn = Ssn;
         this.Bdate = Bdate;
         this.Address = Address;
         this.Sex = Sex;
         this.Salary = Salary;
-        this.Super_ssn = Super_ssn;
+        this.Super_Name = Super_Name;
         this.Dno = Dno;
     }
 

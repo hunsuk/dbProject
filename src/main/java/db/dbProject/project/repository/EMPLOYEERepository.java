@@ -14,7 +14,8 @@ public class EMPLOYEERepository {
 
     public List<EMPLOYEE> findByAll() throws SQLException{
 
-        String sql = "select * from EMPLOYEE";
+        String sql = "select e1.Fname, e1.Lname, e1.Ssn, e1.Bdate, e1.Address, e1.Sex, e1.Salary, e2.Fname Super_Fname, e2.Lname Super_Lname, d.Dname " +
+                "from EMPLOYEE e1 LEFT OUTER JOIN EMPLOYEE e2 ON e1.Super_ssn = e2.Ssn, DEPARTMENT d where e1.Dno = d.Dnumber";
         Connection con = null;
         PreparedStatement pstm = null;
         ResultSet rs = null;
@@ -26,15 +27,18 @@ public class EMPLOYEERepository {
 
             while (rs.next()){
                 EMPLOYEE employee = new EMPLOYEE();
-                employee.setFname(rs.getString("Fname"));
-                employee.setLname(rs.getString("Lname"));
+                employee.setName(rs.getString("Fname") + " " + rs.getString("Lname"));
                 employee.setSsn(rs.getString("Ssn"));
                 employee.setBdate(rs.getDate("Bdate"));
                 employee.setAddress(rs.getString("Address"));
                 employee.setSex(rs.getString("Sex"));
                 employee.setSalary(rs.getDouble("Salary"));
-                employee.setSuper_ssn(rs.getString("Super_ssn"));
-                employee.setDno(rs.getInt("Dno"));
+                if(rs.getString("Super_Fname") == null){
+                    employee.setSuper_Name("");
+                }else{
+                    employee.setSuper_Name(rs.getString("Super_Fname") + " " + rs.getString("Super_Lname"));
+                }
+                employee.setDno(rs.getString("Dname"));
                 log.info(employee.toString());
                 data_rs.add(employee);
             }

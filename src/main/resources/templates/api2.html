@@ -31,37 +31,58 @@
     </div>
 
     <a> 검색 항목</a>
-    <label><input type="checkbox" name="name" value="name"> Name</label>
-    <label><input type="checkbox" name="ssn" value="ssn"> Ssn</label>
-    <label><input type="checkbox" name="Bdate" value="Bdate"> Bdate</label>
-    <label><input type="checkbox" name="Address" value="Address"> Address</label>
-    <label><input type="checkbox" name="Sex" value="Sex"> Sex</label>
-    <label><input type="checkbox" name="Salary" value="Salary"> Salary</label>
-    <label><input type="checkbox" name="Supervisor" value="Supervisor"> Supervisor</label>
-    <label><input type="checkbox" name="Department" value="Department"> Department</label>
+    <label th:if="${search.name} == 'name'"><input type="checkbox" name="name" value="name" checked> Name</label>
+    <label th:unless="${search.name} == 'name'"><input type="checkbox" name="name" value="name" checked> Name</label>
+
+    <label th:if="${search.ssn} == 'ssn'"><input type="checkbox" name="ssn" value="ssn" checked> Ssn</label>
+    <label th:unless="${search.ssn} == 'ssn'"><input type="checkbox" name="ssn" value="ssn"> Ssn</label>
+
+    <label th:if="${search.Bdate} == 'Bdate'"><input type="checkbox" name="Bdate" value="Bdate" checked> Bdate</label>
+    <label th:unless="${search.Bdate} == 'Bdate'"><input type="checkbox" name="Bdate" value="Bdate" > Bdate</label>
+
+
+    <label th:if="${search.Address} == 'Address'"><input type="checkbox" name="Address" value="Address" checked> Address</label>
+    <label th:unless="${search.Address} == 'Address'"><input type="checkbox" name="Address" value="Address"> Address</label>
+
+
+    <label th:if="${search.Sex} == 'Sex'"><input type="checkbox" name="Sex" value="Sex" checked> Sex</label>
+    <label th:unless="${search.Sex} == 'Sex'"><input type="checkbox" name="Sex" value="Sex"> Sex</label>
+
+
+    <label th:if="${search.Salary} == 'Salary'"><input type="checkbox" name="Salary" value="Salary" checked> Salary</label>
+    <label th:unless="${search.Salary} == 'Salary'"><input type="checkbox" name="Salary" value="Salary"> Salary</label>
+
+    <label th:if ="${search.Supervisor} == 'Supervisor'"><input type="checkbox" name="Supervisor" value="Supervisor" checked> Supervisor</label>
+    <label th:unless ="${search.Supervisor} == 'Supervisor'"><input type="checkbox" name="Supervisor" value="Supervisor"> Supervisor</label>
+
+    <label th:if ="${search.Department} == 'Department'"><input type="checkbox" name="Department" value="Department" checked> Department</label>
+    <label th:unless ="${search.Department} == 'Department'"><input type="checkbox" name="Department" value="Department"> Department</label>
+
     <button type="submit" form="sendSql">제출하기</button>
   </form>
   <hr/>
   <table>
     <tr>
-      <th>#</th>
-      <th>Fname</th>
-      <th>Lname</th>
-      <th>Ssn</th>
-      <th>Address</th>
-      <th>Sex</th>
-      <th>Super_ssn</th>
-      <th>Dno</th>
+      <th>선택</th>
+      <th th:if="${search.name} == 'name'">Name</th>
+      <th th:if="${search.ssn} == 'ssn'">Ssn</th>
+      <th th:if="${search.Bdate} == 'Bdate'">Bdate</th>
+      <th th:if="${search.Address} == 'Address'">Address</th>
+      <th th:if="${search.Sex} == 'Sex'">Sex</th>
+      <th th:if="${search.Salary} == 'Salary'">Salary</th>
+      <th th:if="${search.Supervisor} == 'Supervisor'">Supervisor</th>
+      <th th:if="${search.Department} == 'Department'">Department</th>
     </tr>
     <tr th:each="event , index: ${events}">
-      <td><label><input type="checkbox" name="choice" value="${index.index}"> 선택</label></td>
-      <td th:text="${event.Fname}">Fname</td>
-      <td th:text="${event.Lname}">Lname</td>
-      <td th:text="${event.Ssn}">Ssn</td>
-      <td th:text="${event.Address}"> Address</td>
-      <td th:text="${event.sex}">Sex</td>
-      <td th:text="${event.Super_ssn}">Super_ssn</td>
-      <td th:text="${event.Dno}">Dno</td>
+      <td><label><input type="checkbox" name="choice" value="${index.index}"></label></td>
+      <td th:if="${search.name} == 'name'" th:text="${event.Name}">Name</td>
+      <td th:if="${search.ssn} == 'ssn'" th:text="${event.Ssn}">Ssn</td>
+      <td th:if="${search.Bdate} == 'Bdate'" th:text="${event.Bdate}">Bdate</td>
+      <td th:if="${search.Address} == 'Address'" th:text="${event.Address}"> Address</td>
+      <td th:if="${search.Sex} == 'Sex'" th:text="${event.sex}">Sex</td>
+      <td th:if="${search.Salary} == 'Salary'" th:text="${event.Salary}">Salary</td>
+      <td th:if="${search.Supervisor} == 'Supervisor'" th:text="${event.Super_Name}">Supervisor</td>
+      <td th:if="${search.Department} == 'Department'" th:text="${event.Dno}">Department<</td>
     </tr>
   </table>
 
