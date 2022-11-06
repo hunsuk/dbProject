@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>프로젝트1</title>
+</head>
+<body>
+  <form action="/api1" method="post" id = "sendSql">
+    <a> 검색 범위 </a>
+    <div>
+      <select name = "range">
+        <option value="default">전체</option>
+        <option value="department">부서</option>
+        <option value="sex">성별</option>
+        <option value="salary">연봉</option>
+        <option value="birth">생일</option>
+        <option value="employee ">부하직원</option>
+      </select>
+
+      <input type = "text" id="input_search" name = "input_search">
+    </div>
+
+    <a> 검색 항목</a>
+    <label><input type="checkbox" name="name" value="name"> Name</label>
+    <label><input type="checkbox" name="ssn" value="ssn"> Ssn</label>
+    <label><input type="checkbox" name="Bdate" value="Bdate"> Bdate</label>
+    <label><input type="checkbox" name="Address" value="Address"> Address</label>
+    <label><input type="checkbox" name="Sex" value="Sex"> Sex</label>
+    <label><input type="checkbox" name="Salary" value="Salary"> Salary</label>
+    <label><input type="checkbox" name="Supervisor" value="Supervisor"> Supervisor</label>
+    <label><input type="checkbox" name="Department" value="Department"> Department</label>
+    <button type="submit" form="sendSql">제출하기</button>
+  </form>
+</body>
+</html>
