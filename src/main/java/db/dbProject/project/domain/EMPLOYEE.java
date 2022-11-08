@@ -8,7 +8,6 @@ import java.sql.Date;
 @Data
 public class EMPLOYEE {
 
-
     private String Name;
     private String Ssn;
     private Date Bdate;
@@ -22,7 +21,7 @@ public class EMPLOYEE {
     public EMPLOYEE(){
 
     }
-    public EMPLOYEE(String Name,  String Ssn, Date Bdate, String Address, String Sex, Double Salary, String Super_Name, String Dno){
+    public EMPLOYEE(String Name, String Ssn, Date Bdate, String Address, String Sex, Double Salary, String Super_Name, String Dno){
         this.Name  = Name;
         this.Ssn = Ssn;
         this.Bdate = Bdate;

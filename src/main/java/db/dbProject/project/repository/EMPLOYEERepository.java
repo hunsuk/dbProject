@@ -3,10 +3,13 @@ package db.dbProject.project.repository;
 
 import db.dbProject.project.DBConnectoinUtil;
 import db.dbProject.project.domain.EMPLOYEE;
+import db.dbProject.project.domain.InputEmployee;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 @Slf4j
@@ -23,7 +26,7 @@ public class EMPLOYEERepository {
         try{
             con = getConnection();
             pstm=con.prepareStatement(sql);
-            rs =pstm.executeQuery();
+            rs = pstm.executeQuery();
 
             while (rs.next()){
                 EMPLOYEE employee = new EMPLOYEE();
@@ -49,6 +52,43 @@ public class EMPLOYEERepository {
         } finally {
             close(con,pstm,null);
         }
+    }
+
+    public InputEmployee save(InputEmployee employee) throws SQLException {
+        String sql = "insert into employee(Fname, Minit, Lname, Ssn, Bdate, Address, Sex, Salary, Super_ssn, Dno, Created, Modified)" +
+                "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        Connection con = null;
+        PreparedStatement pstm = null;
+
+        try {
+            Calendar cal = new GregorianCalendar();
+            Timestamp ts = new Timestamp(cal.getTimeInMillis());
+
+            con = getConnection();
+            pstm = con.prepareStatement(sql);
+            pstm.setString(1, employee.getFname());
+            pstm.setString(2, employee.getMinit());
+            pstm.setString(3, employee.getLname());
+            pstm.setString(4, employee.getSsn());
+            pstm.setDate(5, employee.getBdate());
+            pstm.setString(6, employee.getAddress());
+            pstm.setString(7, employee.getSex());
+            pstm.setDouble(8, employee.getSalary());
+            pstm.setString(9, employee.getSuper_ssn());
+            pstm.setInt(10, employee.getDno());
+            pstm.setTimestamp(11, ts);
+            pstm.setTimestamp(12, ts);
+
+            pstm.executeUpdate();
+            return employee;
+        } catch (SQLException e) {
+            log.error("삽입 오류", e);
+            throw e;
+        } finally {
+            close(con, pstm, null);
+        }
+
     }
 
     private static Connection getConnection() {
@@ -80,5 +120,4 @@ public class EMPLOYEERepository {
             }
         }
     }
-
 }

@@ -2,6 +2,7 @@ package db.dbProject.project.controller;
 
 
 import db.dbProject.project.domain.EMPLOYEE;
+import db.dbProject.project.domain.InputEmployee;
 import db.dbProject.project.domain.Search;
 import db.dbProject.project.repository.EMPLOYEERepository;
 import lombok.extern.slf4j.Slf4j;
@@ -35,4 +36,17 @@ public class GetApi {
         return "api2";
     }
 
+    @PostMapping(value = "/api1/add")
+    public String api3(@ModelAttribute InputEmployee employee) throws SQLException {
+
+        EMPLOYEERepository EMPLOYEErepo = new EMPLOYEERepository();
+
+        InputEmployee newEmployee = new InputEmployee(employee.getFname(), employee.getMinit(), employee.getLname(),
+                employee.getSsn(), employee.getBdate(), employee.getAddress(), employee.getSex(),
+                employee.getSalary(), employee.getSuper_ssn(), employee.getDno());
+
+        EMPLOYEErepo.save(newEmployee);
+
+        return "api1";
+    }
 }
