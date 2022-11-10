@@ -3,21 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <title>프로젝트1</title>
+  <script>
+      var selectAry = new Array();
+
+
+      function getSelectValue(){
+        var sel = document.getElementById("range");
+        var val = sel.options[range.selectedIndex].value;
+        var select = "";
+
+        if (val == "default"){
+           range_select.innerHTML = "";
+           return;
+        } else if (val == "department"){
+           var arr = new Array(3);
+           arr[0] = "<OPTION value=\"Research\">" + "Research" + "</OPTION>";
+           arr[1] = "<OPTION value=\"Administration\">" + "Administration" + "</OPTION>";
+           arr[2] = "<OPTION value=\"Headquarters\">" + "Headquarters" + "</OPTION>";
+           range_select.innerHTML = "<SELECT ID='departSelect' NAME='input_search'>" + arr.join() + "</SELECT>";
+           return;
+        }else if (val == "sex"){
+           var arr = new Array(3);
+           arr[0] = "<OPTION value=\"M\">" + "M" + "</OPTION>";
+           arr[1] = "<OPTION value=\"F\">" + "F" + "</OPTION>";
+           range_select.innerHTML = "<SELECT ID='sexSelect' NAME='input_search'>" + arr.join() + "</SELECT>";
+           return;
+        }else if (val == "salary"){
+           range_select.innerHTML = "<INPUT TYPE='text' ID='salarySelect' NAME='input_search'>"
+           return;
+        }else if (val == "birth"){
+           var arr = new Array(12);
+           for (var i=1; i <13; i++){
+              arr[i] = '<OPTION value='+ i + '>' + i+'</OPTION>';
+           }
+           range_select.innerHTML = "<SELECT ID='birthSelect' NAME='input_search'>" + arr.join() + "</SELECT>";
+           return;
+        }else if (val == "employee"){
+           range_select.innerHTML = "<INPUT TYPE='text' ID='employee' NAME='input_search'>"
+           return;
+        }
+
+      }
+
+      function getCheckboxValue(event)  {
+        let result = '';
+        if(event.target.checked)  {
+          selectAry.push(event.target.value);
+        }else {
+          selectAry.splice(selectAry.indexOf(event.target.value),1);
+        }
+        for (let i=0; i < selectAry.length; i++){
+          result += (i+1)+ '.' + selectAry[i]+' ';
+        }
+        document.getElementById('select_name').innerText = result;
+    }
+
+  </script>
 </head>
 <body>
-  <form action="/api1" method="post" id = "sendSql">
+  <form action="/api2" method="post" id = "sendSql">
     <a> 검색 범위 </a>
     <div>
-      <select name = "range">
+      <select name = "range" id="range" onchange="getSelectValue()">
         <option value="default">전체</option>
         <option value="department">부서</option>
         <option value="sex">성별</option>
         <option value="salary">연봉</option>
         <option value="birth">생일</option>
-        <option value="employee ">부하직원</option>
+        <option value="employee">부하직원</option>
       </select>
-
-      <input type = "text" id="input_search" name = "input_search">
+      <a id="range_select"></a>
     </div>
 
     <a> 검색 항목</a>

@@ -13,26 +13,81 @@
               border: 1px solid #444444;
           }
     </style>
+  <script>
+      var selectAry = new Array();
+
+
+      function getSelectValue(){
+        var sel = document.getElementById("range");
+        var val = sel.options[range.selectedIndex].value;
+        var select = "";
+
+        if (val == "default"){
+           range_select.innerHTML = "";
+           return;
+        } else if (val == "department"){
+           var arr = new Array(3);
+           arr[0] = "<OPTION value=\"Research\">" + "Research" + "</OPTION>";
+           arr[1] = "<OPTION value=\"Administration\">" + "Administration" + "</OPTION>";
+           arr[2] = "<OPTION value=\"Headquarters\">" + "Headquarters" + "</OPTION>";
+           range_select.innerHTML = "<SELECT ID='departSelect' NAME='input_search'>" + arr.join() + "</SELECT>";
+           return;
+        }else if (val == "sex"){
+           var arr = new Array(3);
+           arr[0] = "<OPTION value=\"M\">" + "M" + "</OPTION>";
+           arr[1] = "<OPTION value=\"F\">" + "F" + "</OPTION>";
+           range_select.innerHTML = "<SELECT ID='sexSelect' NAME='input_search'>" + arr.join() + "</SELECT>";
+           return;
+        }else if (val == "salary"){
+           range_select.innerHTML = "<INPUT TYPE='text' ID='salarySelect' NAME='input_search'>"
+           return;
+        }else if (val == "birth"){
+           var arr = new Array(12);
+           for (var i=0; i <12; i++){
+              arr[i] = '<OPTION value='+ i + '>' + i+'</OPTION>';
+           }
+           range_select.innerHTML = "<SELECT ID='birthSelect' NAME='input_search'>" + arr.join() + "</SELECT>";
+           return;
+        }else if (val == "employee"){
+           range_select.innerHTML = "<INPUT TYPE='text' ID='employee' NAME='input_search'>"
+           return;
+        }
+
+      }
+
+      function getCheckboxValue(event)  {
+        let result = '';
+        if(event.target.checked)  {
+          selectAry.push(event.target.value);
+        }else {
+          selectAry.splice(selectAry.indexOf(event.target.value),1);
+        }
+        for (let i=0; i < selectAry.length; i++){
+          result += (i+1)+ '.' + selectAry[i]+' ';
+        }
+        document.getElementById('select_name').innerText = result;
+    }
+
+  </script>
 </head>
 <body>
-  <form action="/api1" method="post" id = "sendSql">
+  <form action="/api2" method="post" id = "sendSql">
     <a> 검색 범위 </a>
     <div>
-      <select name = "range">
+      <select name = "range" id="range" onchange="getSelectValue()">
         <option value="default">전체</option>
         <option value="department">부서</option>
         <option value="sex">성별</option>
         <option value="salary">연봉</option>
         <option value="birth">생일</option>
-        <option value="employee ">부하직원</option>
+        <option value="employee">부하직원</option>
       </select>
-
-      <input type = "text" id="input_search" name = "input_search">
+      <a id="range_select"></a>
     </div>
 
     <a> 검색 항목</a>
     <label th:if="${search.name} == 'name'"><input type="checkbox" name="name" value="name" checked> Name</label>
-    <label th:unless="${search.name} == 'name'"><input type="checkbox" name="name" value="name" checked> Name</label>
+    <label th:unless="${search.name} == 'name'"><input type="checkbox" name="name" value="name" > Name</label>
 
     <label th:if="${search.ssn} == 'ssn'"><input type="checkbox" name="ssn" value="ssn" checked> Ssn</label>
     <label th:unless="${search.ssn} == 'ssn'"><input type="checkbox" name="ssn" value="ssn"> Ssn</label>
@@ -60,7 +115,7 @@
 
     <button type="submit" form="sendSql">제출하기</button>
   </form>
-  <hr/>
+  <br>
   <table>
     <tr>
       <th>선택</th>
@@ -74,7 +129,7 @@
       <th th:if="${search.Department} == 'Department'">Department</th>
     </tr>
     <tr th:each="event , index: ${events}">
-      <td><label><input type="checkbox" name="choice" value="${index.index}"></label></td>
+      <td><input type="checkbox" name="choice"  onclick="getCheckboxValue(event)" th:value="${event.name}"></td>
       <td th:if="${search.name} == 'name'" th:text="${event.Name}">Name</td>
       <td th:if="${search.ssn} == 'ssn'" th:text="${event.Ssn}">Ssn</td>
       <td th:if="${search.Bdate} == 'Bdate'" th:text="${event.Bdate}">Bdate</td>
@@ -85,6 +140,24 @@
       <td th:if="${search.Department} == 'Department'" th:text="${event.Dno}">Department<</td>
     </tr>
   </table>
+  <a>선택된 직원:</a>
+  <a id='select_name'></a>
+  <br>
+  <a>인원수:</a>
+  <a th:text="${events_size}"></a>
+
+  <div align="center" >
+    <a>수정:</a>
+    <select name = "range">
+      <option value="address">주소</option>
+      <option value="sex">성별</option>
+      <option value="salary">연봉</option>
+    </select>
+
+    <input type = "text" id="input_update" name = "input_search">
+    <button type="submit" form="sendSql">UPDATE</button>
+    <button  type="submit" form="sendSql" style="float: right;">선택된 데이터 삭제</button>
+  </div>
 
 </body>
 </html>

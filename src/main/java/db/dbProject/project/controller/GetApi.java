@@ -2,8 +2,8 @@ package db.dbProject.project.controller;
 
 
 import db.dbProject.project.domain.EMPLOYEE;
-import db.dbProject.project.domain.InputEmployee;
 import db.dbProject.project.domain.Search;
+import db.dbProject.project.domain.Search_sub;
 import db.dbProject.project.repository.EMPLOYEERepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
@@ -25,28 +25,28 @@ public class GetApi {
         return "api1";
     }
 
-    @PostMapping(value = "/api1")
-    public String api2(@ModelAttribute Search search, Model model) throws SQLException {
-
+    @PostMapping(value = "/api2")
+    public String api2(@ModelAttribute Search search, @ModelAttribute Search_sub search_sub, Model model) throws SQLException {
+        log.info(search_sub.getRange());
         List<EMPLOYEE> employees = new ArrayList<EMPLOYEE>();
         EMPLOYEERepository EMPLOYEErepo = new EMPLOYEERepository();
-        employees = EMPLOYEErepo.findByAll();
+
+        log.info(search_sub.getInput_search());
+        if (search_sub.getRange().equals("default")){
+            employees = EMPLOYEErepo.findByAll();
+        }else{
+            employees = EMPLOYEErepo.findBySQL(search_sub.getRange(),search_sub.getInput_search());
+        }
+
         model.addAttribute("events" ,employees);
+        model.addAttribute("events_size",employees.size());
         model.addAttribute("search" ,search);
         return "api2";
     }
 
-    @PostMapping(value = "/api1/add")
-    public String api3(@ModelAttribute InputEmployee employee) throws SQLException {
 
-        EMPLOYEERepository EMPLOYEErepo = new EMPLOYEERepository();
+//    //유저 마이페이지
+//    @GetMapping(value = "/myPage")
+//    public String api3()
 
-        InputEmployee newEmployee = new InputEmployee(employee.getFname(), employee.getMinit(), employee.getLname(),
-                employee.getSsn(), employee.getBdate(), employee.getAddress(), employee.getSex(),
-                employee.getSalary(), employee.getSuper_ssn(), employee.getDno());
-
-        EMPLOYEErepo.save(newEmployee);
-
-        return "api1";
-    }
 }
