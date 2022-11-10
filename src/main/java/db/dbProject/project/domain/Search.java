@@ -5,13 +5,11 @@ import lombok.Data;
 
 @Data
 public class Search {
-    private String range;
-    private String input_search;
+
+//  컬럼 필터
     private String name;
     private String ssn;
-
     private String Bdate;
-
     private String Address;
     private String Sex;
     private String Salary;
@@ -22,9 +20,8 @@ public class Search {
 
     }
 
-    public Search(String range,String input_search, String name,String ssn, String Bdate,String Address,String Sex, String Salary, String Supervisor, String Department){
-        this.range = range;
-        this.input_search = input_search;
+    public Search(String name,String ssn, String Bdate,String Address,String Sex, String Salary, String Supervisor, String Department){
+        this.name = name;
         this.ssn = ssn;
         this.Bdate = Bdate;
         this.Address = Address;

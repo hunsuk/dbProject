@@ -8,7 +8,7 @@ import java.sql.Date;
 @Data
 public class EMPLOYEE {
 
-
+//  체크박스 체크 여부
     private String Name;
     private String Ssn;
     private Date Bdate;
@@ -18,6 +18,8 @@ public class EMPLOYEE {
     private String Super_Name;
     private String Dno;
 
+// 검색 범위 여부
+    private String range;
 
     public EMPLOYEE(){
 
