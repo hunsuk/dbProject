@@ -2,8 +2,10 @@ package db.dbProject.project.repository;
 
 
 import db.dbProject.project.DBConnectoinUtil;
+import db.dbProject.project.domain.DeleteEmployee;
 import db.dbProject.project.domain.EMPLOYEE;
 import db.dbProject.project.domain.InputEmployee;
+import db.dbProject.project.domain.UpdateEmployee;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.*;
@@ -15,6 +17,9 @@ import java.util.List;
 @Slf4j
 public class EMPLOYEERepository {
 
+    // 현재 날짜
+    Calendar cal = new GregorianCalendar();
+    Timestamp ts = new Timestamp(cal.getTimeInMillis()); //
 
     public List<EMPLOYEE> findBySQL(String range, String value) throws SQLException{
         String target_column = null;
@@ -112,9 +117,6 @@ public class EMPLOYEERepository {
         PreparedStatement pstm = null;
 
         try {
-            Calendar cal = new GregorianCalendar();
-            Timestamp ts = new Timestamp(cal.getTimeInMillis());
-
             con = getConnection();
             pstm = con.prepareStatement(sql);
             pstm.setString(1, employee.getFname());
@@ -124,7 +126,7 @@ public class EMPLOYEERepository {
             pstm.setDate(5, employee.getBdate());
             pstm.setString(6, employee.getAddress());
             pstm.setString(7, employee.getSex());
-            pstm.setDouble(8, employee.getSalary());
+            pstm.setString(8, employee.getSalary());
             pstm.setString(9, employee.getSuper_ssn());
             pstm.setInt(10, employee.getDno());
             pstm.setTimestamp(11, ts);
@@ -138,7 +140,51 @@ public class EMPLOYEERepository {
         } finally {
             close(con, pstm, null);
         }
+    }
 
+    public void update(UpdateEmployee updateEmployee) throws SQLException {
+        String sql = "update employee set "+updateEmployee.getCondition()+"=?, modified=? where Fname=? and Ssn=?";
+
+        Connection con = null;
+        PreparedStatement pstm = null;
+
+        try {
+            con = getConnection();
+            pstm = con.prepareStatement(sql);
+            pstm.setString(1, updateEmployee.getNewValue());
+            pstm.setTimestamp(2, ts);
+            pstm.setString(3, updateEmployee.getFname());
+            pstm.setString(4, updateEmployee.getSsn());
+            pstm.executeUpdate();
+
+        } catch (SQLException e) {
+            log.error("db error", e);
+            throw e;
+        } finally {
+            close(con, pstm, null);
+        }
+    }
+
+    public void delete(DeleteEmployee deleteEmployee) throws SQLException {  // SSn, Fname 으로 구분하기
+        String sql = "delete from employee where Fname=? and Ssn=?";
+
+        Connection con = null;
+        PreparedStatement pstm = null;
+
+        try {
+            con = getConnection();
+            pstm = con.prepareStatement(sql);
+            pstm.setString(1, deleteEmployee.getFname());
+            pstm.setString(2, deleteEmployee.getSsn());
+
+            pstm.executeUpdate();
+
+        } catch (SQLException e) {
+            log.error("db error", e);
+            throw e;
+        } finally {
+            close(con, pstm, null);
+        }
     }
 
     private static Connection getConnection() {

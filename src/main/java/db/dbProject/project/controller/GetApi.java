@@ -1,9 +1,6 @@
 package db.dbProject.project.controller;
 
-
-import db.dbProject.project.domain.EMPLOYEE;
-import db.dbProject.project.domain.Search;
-import db.dbProject.project.domain.Search_sub;
+import db.dbProject.project.domain.*;
 import db.dbProject.project.repository.EMPLOYEERepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +16,8 @@ import java.util.List;
 @Slf4j
 @Controller
 public class GetApi {
+
+    EMPLOYEERepository EMPLOYEErepo = new EMPLOYEERepository();
 
     @RequestMapping(value = "/api1", method = RequestMethod.GET)
     public String api1(){
@@ -44,6 +43,24 @@ public class GetApi {
         return "api2";
     }
 
+    @PostMapping("/api2/employee")
+    public String api3(@ModelAttribute InputEmployee inputEmployee) throws SQLException {
+        EMPLOYEErepo.save(inputEmployee);
+
+        return "api1";
+    }
+    @PutMapping( "/api2/employee")
+    public String api4(@ModelAttribute UpdateEmployee updateEmployee) throws SQLException {
+        EMPLOYEErepo.update(updateEmployee);
+
+        return "api1";
+    }
+    @DeleteMapping("/api2/employee")
+    public String api5(@ModelAttribute DeleteEmployee deleteEmployee) throws SQLException {
+        EMPLOYEErepo.delete(deleteEmployee);
+
+        return "api1";
+    }
 
 //    //유저 마이페이지
 //    @GetMapping(value = "/myPage")
