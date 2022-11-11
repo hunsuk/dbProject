@@ -2,8 +2,27 @@
 <html lang="en" xmlns:th="www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>프로젝트1</title>
     <style>
+          .container p{
+            width: 100px;
+            margin: 0;
+            font-weight: bold;
+        }
+        .a {
+            display: flex;
+        }
+        .title{
+            margin-left: 40px;
+            font-weight: bold;
+            font-size: large;
+        }
+        .add-btn{
+            margin-left: 100px;
+            margin-top: 10px;
+        }
           table {
               width: 100%;
               border: 1px solid #444444;
@@ -12,6 +31,7 @@
           th, td {
               border: 1px solid #444444;
           }
+
     </style>
   <script>
       var selectAry = new Array();
@@ -25,7 +45,7 @@
         if (val == "default"){
            range_select.innerHTML = "";
            return;
-        } else if (val == "department"){
+        } else if (val == "Dname"){
            var arr = new Array(3);
            arr[0] = "<OPTION value=\"Research\">" + "Research" + "</OPTION>";
            arr[1] = "<OPTION value=\"Administration\">" + "Administration" + "</OPTION>";
@@ -41,10 +61,14 @@
         }else if (val == "salary"){
            range_select.innerHTML = "<INPUT TYPE='text' ID='salarySelect' NAME='input_search'>"
            return;
-        }else if (val == "birth"){
+        }else if (val == "bdate"){
            var arr = new Array(12);
-           for (var i=0; i <12; i++){
-              arr[i] = '<OPTION value='+ i + '>' + i+'</OPTION>';
+           for (var i=1; i <13; i++){
+              if (i <10){
+                   arr[i] = '<OPTION value=0'+ i + '>' + i+'</OPTION>';
+              }else{
+                arr[i] = '<OPTION value='+ i + '>' + i+'</OPTION>';
+              }
            }
            range_select.innerHTML = "<SELECT ID='birthSelect' NAME='input_search'>" + arr.join() + "</SELECT>";
            return;
@@ -76,10 +100,10 @@
     <div>
       <select name = "range" id="range" onchange="getSelectValue()">
         <option value="default">전체</option>
-        <option value="department">부서</option>
+        <option value="Dname">부서</option>
         <option value="sex">성별</option>
         <option value="salary">연봉</option>
-        <option value="birth">생일</option>
+        <option value="bdate">생일</option>
         <option value="employee">부하직원</option>
       </select>
       <a id="range_select"></a>
@@ -158,6 +182,60 @@
     <button type="submit" form="sendSql">UPDATE</button>
     <button  type="submit" form="sendSql" style="float: right;">선택된 데이터 삭제</button>
   </div>
+
+  <form action="/api3" class="insert-form" method="post" id ="sendSqlIn">
+    <p class="title">새로운 직원 정보 추가</p>
+    <div class="container">
+
+      <div class="a">
+        <p>First Name: </p>
+        <input type="text" name="fname" >
+      </div>
+      <div class="a">
+        <p>Middle Init.: </p>
+        <input type="text" name="minit" >
+      </div>
+      <div class="a">
+        <p>Last Name:</p>
+        <input type="text" name="lname" >
+      </div>
+      <div class="a">
+        <p>Ssn:</p>
+        <input type="text" name="ssn" >
+      </div>
+      <div class="a">
+        <p>Birthdate:</p>
+        <input type="text" name="bdate" >
+      </div>
+      <div class="a">
+        <p>Address:</p>
+        <input type="text" name="address" >
+      </div>
+
+      <div class="a">
+        <p>Sex:</p>
+        <select id="" name="sex">
+          <option value="M">M</option>
+          <option value="F">F</option>
+        </select>
+      </div>
+
+      <div class="a">
+        <p>Salary:</p>
+        <input type="text" name="salary" >
+      </div>
+      <div class="a">
+        <p>Super_ssn:</p>
+        <input type="text" name="super_ssn" >
+      </div>
+      <div class="a">
+        <p>Dno:</p>
+        <input type="text" name="dno" >
+      </div>
+
+      <button class="add-btn" type="submit" form="sendSqlIn">정보 추가하기</button>
+    </div>
+  </form>
 
 </body>
 </html>

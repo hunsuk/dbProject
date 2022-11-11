@@ -2,14 +2,12 @@ package db.dbProject.project.controller;
 
 
 import db.dbProject.project.domain.EMPLOYEE;
-import db.dbProject.project.domain.Search;
-import db.dbProject.project.domain.Search_sub;
+import db.dbProject.project.dto.Insert;
+import db.dbProject.project.dto.Search;
+import db.dbProject.project.dto.Search_sub;
 import db.dbProject.project.repository.EMPLOYEERepository;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,6 +41,13 @@ public class GetApi {
         model.addAttribute("events_size",employees.size());
         model.addAttribute("search" ,search);
         return "api2";
+    }
+    @PostMapping(value = "/api3")
+    public String api3(@ModelAttribute Insert insert,@ModelAttribute Search search, Model model) throws SQLException {
+        EMPLOYEERepository EMPLOYEErepo = new EMPLOYEERepository();
+        model.addAttribute("search" ,search);
+        EMPLOYEErepo.save(insert);
+        return "redirect:/api1";
     }
 
 
