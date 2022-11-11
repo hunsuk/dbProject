@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container p{
+            width: 100px;
+            margin: 0;
+            font-weight: bold;
+        }
+        .a {
+            display: flex;
+        }
+        .title{
+            margin-left: 40px;
+            font-weight: bold;
+            font-size: large;
+        }
+        .add-btn{
+            margin-left: 100px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <form class="insert-form" method="" action=''>
+        <p class="title">새로운 직원 정보 추가</p>
+        <div class="container">
+
+            <div class="a">
+                <p>First Name: </p>
+                <input type="text" name="fname" >
+            </div>
+            <div class="a">  
+                <p>Middle Init.: </p>
+                <input type="text" name="mname" >
+            </div>
+            <div class="a">
+                <p>Last Name:</p>
+                <input type="text" name="lname" >
+            </div>
+            <div class="a">
+                <p>Ssn:</p>
+                <input type="text" name="ssn" >
+            </div>
+            <div class="a">
+                <p>Birthdate:</p>
+                <input type="text" name="bdate" >
+            </div>
+            <div class="a">
+                <p>Address:</p>
+                <input type="text" name="address" >
+            </div>
+
+            <div class="a">
+                <p>Sex:</p>
+                <select id="" name="sex">
+                    <option value="M">M</option>
+                    <option value="F">F</option>
+                </select>
+            </div>
+
+            <div class="a">
+                <p>Salary:</p>
+                <input type="text" name="salary" >
+            </div>
+            <div class="a">
+                <p>Super_ssn:</p>
+                <input type="text" name="super-ssn" >
+            </div>
+            <div class="a">
+                <p>Dno:</p>
+                <input type="text" name="dno" >
+            </div>
+           
+            <button class="add-btn" type="submit">정보 추가하기</button>
+        </div>
+    </form>
+</body>
+</html>
