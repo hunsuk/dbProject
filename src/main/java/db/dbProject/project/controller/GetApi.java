@@ -5,6 +5,7 @@ import db.dbProject.project.domain.EMPLOYEE;
 import db.dbProject.project.dto.Insert;
 import db.dbProject.project.dto.Search;
 import db.dbProject.project.dto.Search_sub;
+import db.dbProject.project.dto.Update;
 import db.dbProject.project.repository.EMPLOYEERepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -47,6 +48,22 @@ public class GetApi {
         EMPLOYEERepository EMPLOYEErepo = new EMPLOYEERepository();
         model.addAttribute("search" ,search);
         EMPLOYEErepo.save(insert);
+        return "redirect:/api1";
+    }
+
+    @PostMapping(value = "/api4")
+    public String api4(@ModelAttribute Update update, Model model) throws SQLException {
+        EMPLOYEERepository EMPLOYEErepo = new EMPLOYEERepository();
+
+        EMPLOYEErepo.delete(update.getSsn().split(" "));
+
+        return "redirect:/api1";
+    }
+    @PostMapping(value = "/api5")
+    public String api5(@ModelAttribute Update update, Model model) throws SQLException {
+        EMPLOYEERepository EMPLOYEErepo = new EMPLOYEERepository();
+
+        EMPLOYEErepo.update(update);
         return "redirect:/api1";
     }
 

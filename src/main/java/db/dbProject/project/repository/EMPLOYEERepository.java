@@ -4,6 +4,7 @@ package db.dbProject.project.repository;
 import db.dbProject.project.DBConnectoinUtil;
 import db.dbProject.project.domain.EMPLOYEE;
 import db.dbProject.project.dto.Insert;
+import db.dbProject.project.dto.Update;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.*;
@@ -17,6 +18,53 @@ public class EMPLOYEERepository {
 
     Calendar cal = new GregorianCalendar();
     Timestamp ts = new Timestamp(cal.getTimeInMillis()); //
+
+
+    public void update(Update update) throws SQLException {
+        String sql = "update EMPLOYEE set "+update.getUpdate()+"=?, modified=? where Ssn=?";
+
+        Connection con = null;
+        PreparedStatement pstm = null;
+        String [] ssn = update.getSsn().split(" ");
+
+
+        for(int i = 0; i < ssn.length; i++) {
+            try {
+                con = getConnection();
+                pstm = con.prepareStatement(sql);
+                pstm.setString(1, update.getUpdate_search());
+                pstm.setTimestamp(2, ts);
+                pstm.setString(3, ssn[i]);
+                pstm.executeUpdate();
+
+            } catch (SQLException e) {
+                log.error("db error", e);
+                throw e;
+            } finally {
+                close(con, pstm, null);
+            }
+        }
+    }
+
+    public void delete(String[] update) throws SQLException {  // SSn, Fname 으로 구분하기
+        String sql = "delete from EMPLOYEE where Ssn=?";
+        Connection con = null;
+        PreparedStatement pstm = null;
+
+        for(int i = 0; i < update.length; i++) {
+            try {
+                con = getConnection();
+                pstm = con.prepareStatement(sql);
+                pstm.setString(1,update[i]);
+                pstm.executeUpdate();
+            } catch (SQLException e) {
+                log.error("db error", e);
+                throw e;
+            } finally {
+                close(con, pstm, null);
+            }
+        }
+    }
 
     public Insert save(Insert employee) throws SQLException {
         String sql = "insert into EMPLOYEE(Fname, Minit, Lname, Ssn, Bdate, Address, Sex, Salary, Super_ssn, Dno, Created, Modified)" +
