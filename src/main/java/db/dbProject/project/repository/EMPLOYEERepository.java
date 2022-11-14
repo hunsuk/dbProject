@@ -3,6 +3,7 @@ package db.dbProject.project.repository;
 
 import db.dbProject.project.DBConnectoinUtil;
 import db.dbProject.project.domain.EMPLOYEE;
+import db.dbProject.project.dto.DnoSalary;
 import db.dbProject.project.dto.Insert;
 import db.dbProject.project.dto.Update;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +19,6 @@ public class EMPLOYEERepository {
 
     Calendar cal = new GregorianCalendar();
     Timestamp ts = new Timestamp(cal.getTimeInMillis()); //
-
 
     public void update(Update update) throws SQLException {
         String sql = "update EMPLOYEE set "+update.getUpdate()+"=?, modified=? where Ssn=?";
@@ -46,7 +46,7 @@ public class EMPLOYEERepository {
         }
     }
 
-    public void delete(String[] update) throws SQLException {  // SSn, Fname 으로 구분하기
+    public void delete(String[] update) throws SQLException {
         String sql = "delete from EMPLOYEE where Ssn=?";
         Connection con = null;
         PreparedStatement pstm = null;
@@ -195,6 +195,29 @@ public class EMPLOYEERepository {
             throw e;
         } finally {
             close(con,pstm,null);
+        }
+    }
+
+    public void updateAllDnoSalary(DnoSalary update) throws SQLException {
+
+        String sql = "update EMPLOYEE set salary = salary "+update.getArithmetic()+" ?, modified=? where Dno=?";
+
+        Connection con = null;
+        PreparedStatement pstm = null;
+
+        try {
+            con = getConnection();
+            pstm = con.prepareStatement(sql);
+            pstm.setString(1, update.getSalary());
+            pstm.setTimestamp(2, ts);
+            pstm.setString(3, update.getDno());
+            pstm.executeUpdate();
+
+        } catch (SQLException e) {
+            log.error("db error", e);
+            throw e;
+        } finally {
+            close(con, pstm, null);
         }
     }
 

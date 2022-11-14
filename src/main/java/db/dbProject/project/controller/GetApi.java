@@ -2,10 +2,7 @@ package db.dbProject.project.controller;
 
 
 import db.dbProject.project.domain.EMPLOYEE;
-import db.dbProject.project.dto.Insert;
-import db.dbProject.project.dto.Search;
-import db.dbProject.project.dto.Search_sub;
-import db.dbProject.project.dto.Update;
+import db.dbProject.project.dto.*;
 import db.dbProject.project.repository.EMPLOYEERepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -67,6 +64,13 @@ public class GetApi {
         return "redirect:/api1";
     }
 
+    @PutMapping(value = "/api6")
+    public String api6(@ModelAttribute DnoSalary update, Model model) throws SQLException {
+        EMPLOYEERepository EMPLOYEErepo = new EMPLOYEERepository();
+
+        EMPLOYEErepo.updateAllDnoSalary(update);
+        return "redirect:/api1";
+    }
 
 //    //유저 마이페이지
 //    @GetMapping(value = "/myPage")
