@@ -1,11 +1,14 @@
 package db.dbProject.project.controller;
 
-import db.dbProject.project.domain.*;
+
+import db.dbProject.project.domain.EMPLOYEE;
+import db.dbProject.project.dto.Insert;
+import db.dbProject.project.dto.Search;
+import db.dbProject.project.dto.Search_sub;
+import db.dbProject.project.dto.Update;
 import db.dbProject.project.repository.EMPLOYEERepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,8 +19,6 @@ import java.util.List;
 @Slf4j
 @Controller
 public class GetApi {
-
-    EMPLOYEERepository EMPLOYEErepo = new EMPLOYEERepository();
 
     @RequestMapping(value = "/api1", method = RequestMethod.GET)
     public String api1(){
@@ -42,25 +43,30 @@ public class GetApi {
         model.addAttribute("search" ,search);
         return "api2";
     }
-
-    @PostMapping("/api2/employee")
-    public String api3(@ModelAttribute InputEmployee inputEmployee) throws SQLException {
-        EMPLOYEErepo.save(inputEmployee);
-
-        return "api1";
+    @PostMapping(value = "/api3")
+    public String api3(@ModelAttribute Insert insert,@ModelAttribute Search search, Model model) throws SQLException {
+        EMPLOYEERepository EMPLOYEErepo = new EMPLOYEERepository();
+        model.addAttribute("search" ,search);
+        EMPLOYEErepo.save(insert);
+        return "redirect:/api1";
     }
-    @PutMapping( "/api2/employee")
-    public String api4(@ModelAttribute UpdateEmployee updateEmployee) throws SQLException {
-        EMPLOYEErepo.update(updateEmployee);
 
-        return "api1";
-    }
-    @DeleteMapping("/api2/employee")
-    public String api5(@ModelAttribute DeleteEmployee deleteEmployee) throws SQLException {
-        EMPLOYEErepo.delete(deleteEmployee);
+    @PostMapping(value = "/api4")
+    public String api4(@ModelAttribute Update update, Model model) throws SQLException {
+        EMPLOYEERepository EMPLOYEErepo = new EMPLOYEERepository();
 
-        return "api1";
+        EMPLOYEErepo.delete(update.getSsn().split(" "));
+
+        return "redirect:/api1";
     }
+    @PostMapping(value = "/api5")
+    public String api5(@ModelAttribute Update update, Model model) throws SQLException {
+        EMPLOYEERepository EMPLOYEErepo = new EMPLOYEERepository();
+
+        EMPLOYEErepo.update(update);
+        return "redirect:/api1";
+    }
+
 
 //    //유저 마이페이지
 //    @GetMapping(value = "/myPage")

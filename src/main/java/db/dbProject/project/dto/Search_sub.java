@@ -1,4 +1,4 @@
-package db.dbProject.project.domain;
+package db.dbProject.project.dto;
 
 import lombok.Data;
 

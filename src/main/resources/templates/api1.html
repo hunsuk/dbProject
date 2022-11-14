@@ -15,7 +15,7 @@
         if (val == "default"){
            range_select.innerHTML = "";
            return;
-        } else if (val == "department"){
+        } else if (val == "Dname"){
            var arr = new Array(3);
            arr[0] = "<OPTION value=\"Research\">" + "Research" + "</OPTION>";
            arr[1] = "<OPTION value=\"Administration\">" + "Administration" + "</OPTION>";
@@ -31,10 +31,14 @@
         }else if (val == "salary"){
            range_select.innerHTML = "<INPUT TYPE='text' ID='salarySelect' NAME='input_search'>"
            return;
-        }else if (val == "birth"){
+        }else if (val == "bdate"){
            var arr = new Array(12);
            for (var i=1; i <13; i++){
-              arr[i] = '<OPTION value='+ i + '>' + i+'</OPTION>';
+              if (i <10){
+                arr[i] = '<OPTION value=0'+ i + '>' + i+'</OPTION>';
+              }else{
+                arr[i] = '<OPTION value='+ i + '>' + i+'</OPTION>';
+              }
            }
            range_select.innerHTML = "<SELECT ID='birthSelect' NAME='input_search'>" + arr.join() + "</SELECT>";
            return;
@@ -66,10 +70,10 @@
     <div>
       <select name = "range" id="range" onchange="getSelectValue()">
         <option value="default">전체</option>
-        <option value="department">부서</option>
+        <option value="Dname">부서</option>
         <option value="sex">성별</option>
         <option value="salary">연봉</option>
-        <option value="birth">생일</option>
+        <option value="bdate">생일</option>
         <option value="employee">부하직원</option>
       </select>
       <a id="range_select"></a>
