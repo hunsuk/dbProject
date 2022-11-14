@@ -165,7 +165,7 @@ public class EMPLOYEERepository {
         }
     }
 
-    public void delete(DeleteEmployee deleteEmployee) throws SQLException {  // SSn, Fname 으로 구분하기
+    public void delete(DeleteEmployee deleteEmployee) throws SQLException {
         String sql = "delete from employee where Fname=? and Ssn=?";
 
         Connection con = null;
