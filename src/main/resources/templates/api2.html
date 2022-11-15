@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="www.thymeleaf.org">
+<html lang="en" xmlns:th="www.thymeleaf.org" xmlns:width="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -276,6 +276,40 @@
       <button class="add-btn" type="submit" form="sendSqlIn">정보 추가하기</button>
     </div>
   </form>
+
+  <!-- 부서별 월급 일괄수정 -->
+  <form action="/api6" class="salary-form" method="post" id ="sendSqlsalary">
+    <p class="title">새로운 직원 정보 추가</p>
+    <div class="container">
+      <div style ='width: 300px;' >
+        <p>Department: </p>
+        <div style='padding-left: 20px;'>
+          <select id="dno" name="dno">
+            <option value="5">Research</option>
+            <option value="4">Administration</option>
+            <option value="1">Headquarters</option>
+          </select>
+        </div>
+      </div>
+      <div style ='width: 300px;  margin-top: 10px'>
+        <p> 월급 수정</p>
+        <div style='padding-left: 20px;'>
+          <select id='arithmetic' name="arithmetic">
+            <option value='+'> + </option>
+            <option value='-'> - </option>
+            <option value='*'> X </option>
+            <option value='/'> / </option>
+          </select>
+          <input type="text" id= 'salary' name="salary" > </input>
+        </div>
+
+      </div>
+    </div>
+    <div style='padding-left: 40px;'>
+      <button class="add-btn"  type="submit" form="sendSqlsalary">월급 일괄 수정하기</button>
+    </div>
+  </form>
+
 
 </body>
 </html>
