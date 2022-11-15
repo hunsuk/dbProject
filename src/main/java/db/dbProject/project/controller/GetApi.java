@@ -64,7 +64,7 @@ public class GetApi {
         return "redirect:/api1";
     }
 
-    @PutMapping(value = "/api6")
+    @PostMapping(value = "/api6")
     public String api6(@ModelAttribute DnoSalary update, Model model) throws SQLException {
         EMPLOYEERepository EMPLOYEErepo = new EMPLOYEERepository();
 
