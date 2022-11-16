@@ -1,5 +1,6 @@
 package db.dbProject.project.repository;
 
+import db.dbProject.project.domain.Dependent;
 import db.dbProject.project.domain.EMPLOYEE;
 import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
@@ -23,5 +24,18 @@ class EMPLOYEERepositoryTest {
         employees = EMPLOYEErepo.findByAll();
 
         Assertions.assertThat(employees.size()).isEqualTo(8);
+    }
+    @Test
+    void searchDependent() throws SQLException{
+
+        ArrayList<Dependent> dependents_list = new ArrayList<Dependent>();
+        EMPLOYEERepository EMPLOYEErepo = new EMPLOYEERepository();
+
+        dependents_list = EMPLOYEErepo.search_dependent("123456789");
+
+        for(int i = 0; i < dependents_list.size(); i++){
+            System.out.println(dependents_list.get(i).toString());
+        }
+
     }
 }

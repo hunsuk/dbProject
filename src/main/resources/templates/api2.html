@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="www.thymeleaf.org" xmlns:width="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>프로젝트1</title>
-    <style>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>프로젝트1</title>
+  <style>
           .container p{
             width: 100px;
             margin: 0;
@@ -22,6 +22,18 @@
         .add-btn{
             margin-left: 100px;
             margin-top: 10px;
+        }
+        .under-section{
+          display: flex;
+          justify-content: space-around;
+          margin: auto;
+          align-items: center;
+          width : 100%;
+        }
+        .dependent-tb{
+          width: 300px;
+          border: 1px solid #444444;
+          text-align: center;
         }
           table {
               width: 100%;
@@ -121,108 +133,110 @@
 
         document.getElementById('update_user').innerHTML = "<INPUT TYPE='text' ID = 'ssn_select' NAME='ssn' style = 'display: none;' value = '"+ result2 + "'>";
         document.getElementById('update_user2').innerHTML = "<INPUT TYPE='text' ID = 'ssn_select' NAME='ssn' style = 'display: none;' value = '"+ result2 + "'>";
+        document.getElementById('update_user3').innerHTML = "<INPUT TYPE='text' ID = 'ssn_select' NAME='ssn' style = 'display: none;' value = '"+ result2 + "'>";
+
       }
 
 
   </script>
 </head>
 <body>
-  <form action="/api2" method="post" id = "sendSql">
-    <a> 검색 범위 </a>
-    <div>
-      <select name = "range" id="range" onchange="getSelectValue()">
-        <option value="default">전체</option>
-        <option value="Dname">부서</option>
-        <option value="sex">성별</option>
-        <option value="salary">연봉</option>
-        <option value="bdate">생일</option>
-        <option value="employee">부하직원</option>
-      </select>
-      <a id="range_select"></a>
-    </div>
+<form action="/api2" method="post" id = "sendSql">
+  <a> 검색 범위 </a>
+  <div>
+    <select name = "range" id="range" onchange="getSelectValue()">
+      <option value="default">전체</option>
+      <option value="Dname">부서</option>
+      <option value="sex">성별</option>
+      <option value="salary">연봉</option>
+      <option value="bdate">생일</option>
+      <option value="employee">부하직원</option>
+    </select>
+    <a id="range_select"></a>
+  </div>
 
-    <a> 검색 항목</a>
-    <label th:if="${search.name} == 'name'"><input type="checkbox" name="name" value="name" checked> Name</label>
-    <label th:unless="${search.name} == 'name'"><input type="checkbox" name="name" value="name" > Name</label>
+  <a> 검색 항목</a>
+  <label th:if="${search.name} == 'name'"><input type="checkbox" name="name" value="name" checked> Name</label>
+  <label th:unless="${search.name} == 'name'"><input type="checkbox" name="name" value="name" > Name</label>
 
-    <label th:if="${search.ssn} == 'ssn'"><input type="checkbox" name="ssn" value="ssn" checked> Ssn</label>
-    <label th:unless="${search.ssn} == 'ssn'"><input type="checkbox" name="ssn" value="ssn"> Ssn</label>
+  <label th:if="${search.ssn} == 'ssn'"><input type="checkbox" name="ssn" value="ssn" checked> Ssn</label>
+  <label th:unless="${search.ssn} == 'ssn'"><input type="checkbox" name="ssn" value="ssn"> Ssn</label>
 
-    <label th:if="${search.Bdate} == 'Bdate'"><input type="checkbox" name="Bdate" value="Bdate" checked> Bdate</label>
-    <label th:unless="${search.Bdate} == 'Bdate'"><input type="checkbox" name="Bdate" value="Bdate" > Bdate</label>
-
-
-    <label th:if="${search.Address} == 'Address'"><input type="checkbox" name="Address" value="Address" checked> Address</label>
-    <label th:unless="${search.Address} == 'Address'"><input type="checkbox" name="Address" value="Address"> Address</label>
+  <label th:if="${search.Bdate} == 'Bdate'"><input type="checkbox" name="Bdate" value="Bdate" checked> Bdate</label>
+  <label th:unless="${search.Bdate} == 'Bdate'"><input type="checkbox" name="Bdate" value="Bdate" > Bdate</label>
 
 
-    <label th:if="${search.Sex} == 'Sex'"><input type="checkbox" name="Sex" value="Sex" checked> Sex</label>
-    <label th:unless="${search.Sex} == 'Sex'"><input type="checkbox" name="Sex" value="Sex"> Sex</label>
+  <label th:if="${search.Address} == 'Address'"><input type="checkbox" name="Address" value="Address" checked> Address</label>
+  <label th:unless="${search.Address} == 'Address'"><input type="checkbox" name="Address" value="Address"> Address</label>
 
 
-    <label th:if="${search.Salary} == 'Salary'"><input type="checkbox" name="Salary" value="Salary" checked> Salary</label>
-    <label th:unless="${search.Salary} == 'Salary'"><input type="checkbox" name="Salary" value="Salary"> Salary</label>
-
-    <label th:if ="${search.Supervisor} == 'Supervisor'"><input type="checkbox" name="Supervisor" value="Supervisor" checked> Supervisor</label>
-    <label th:unless ="${search.Supervisor} == 'Supervisor'"><input type="checkbox" name="Supervisor" value="Supervisor"> Supervisor</label>
-
-    <label th:if ="${search.Department} == 'Department'"><input type="checkbox" name="Department" value="Department" checked> Department</label>
-    <label th:unless ="${search.Department} == 'Department'"><input type="checkbox" name="Department" value="Department"> Department</label>
-
-    <button type="submit" form="sendSql">제출하기</button>
-  </form>
-  <br>
-  <table>
-    <tr>
-      <th>선택</th>
-      <th th:if="${search.name} == 'name'">Name</th>
-      <th th:if="${search.ssn} == 'ssn'">Ssn</th>
-      <th th:if="${search.Bdate} == 'Bdate'">Bdate</th>
-      <th th:if="${search.Address} == 'Address'">Address</th>
-      <th th:if="${search.Sex} == 'Sex'">Sex</th>
-      <th th:if="${search.Salary} == 'Salary'">Salary</th>
-      <th th:if="${search.Supervisor} == 'Supervisor'">Supervisor</th>
-      <th th:if="${search.Department} == 'Department'">Department</th>
-    </tr>
-
-    <tr th:each="event , index: ${events}">
-      <td><input type="checkbox" name="choice"  onclick="getCheckboxValue(event)" th:value="${event.name} + ',' + ${event.ssn}"></td>
-      <td th:if="${search.name} == 'name'" th:text="${event.Name}">Name</td>
-      <td th:if="${search.ssn} == 'ssn'" th:text="${event.Ssn}">Ssn</td>
-      <td th:if="${search.Bdate} == 'Bdate'" th:text="${event.Bdate}">Bdate</td>
-      <td th:if="${search.Address} == 'Address'" th:text="${event.Address}"> Address</td>
-      <td th:if="${search.Sex} == 'Sex'" th:text="${event.sex}">Sex</td>
-      <td th:if="${search.Salary} == 'Salary'" th:text="${event.Salary}">Salary</td>
-      <td th:if="${search.Supervisor} == 'Supervisor'" th:text="${event.Super_Name}">Supervisor</td>
-      <td th:if="${search.Department} == 'Department'" th:text="${event.Dno}">Department<</td>
-    </tr>
-  </table>
-  <a>선택된 직원:</a>
-  <a id='select_name'></a>
-  <br>
-  <a>인원수:</a>
-  <a th:text="${events_size}"></a>
-
-  <form action="/api5" class ="update-form" method="post" id="updateSqlIn">
-    <div align="center" >
-      <select name = "update" id="update" onchange="getSelectUpdateValue()">
-        <option value="default">선택</option>
-        <option value="address">주소</option>
-        <option value="sex">성별</option>
-        <option value="salary">연봉</option>
-      </select>
-      <a id="update_select"></a>
-      <a id="update_user"></a>
-      <button type="submit" form="updateSqlIn">UPDATE</button>
-    </div>
-  </form>
-
-  <form action="/api4" class ="update-form" method="post" id="delSqlIn">
-    <a id="update_user2"></a>
-    <button type="submit" form="delSqlIn" style="float: right;">선택된 데이터 삭제</button>
-  </form>
+  <label th:if="${search.Sex} == 'Sex'"><input type="checkbox" name="Sex" value="Sex" checked> Sex</label>
+  <label th:unless="${search.Sex} == 'Sex'"><input type="checkbox" name="Sex" value="Sex"> Sex</label>
 
 
+  <label th:if="${search.Salary} == 'Salary'"><input type="checkbox" name="Salary" value="Salary" checked> Salary</label>
+  <label th:unless="${search.Salary} == 'Salary'"><input type="checkbox" name="Salary" value="Salary"> Salary</label>
+
+  <label th:if ="${search.Supervisor} == 'Supervisor'"><input type="checkbox" name="Supervisor" value="Supervisor" checked> Supervisor</label>
+  <label th:unless ="${search.Supervisor} == 'Supervisor'"><input type="checkbox" name="Supervisor" value="Supervisor"> Supervisor</label>
+
+  <label th:if ="${search.Department} == 'Department'"><input type="checkbox" name="Department" value="Department" checked> Department</label>
+  <label th:unless ="${search.Department} == 'Department'"><input type="checkbox" name="Department" value="Department"> Department</label>
+
+  <button type="submit" form="sendSql">제출하기</button>
+</form>
+<br>
+<table>
+  <tr>
+    <th>선택</th>
+    <th th:if="${search.name} == 'name'">Name</th>
+    <th th:if="${search.ssn} == 'ssn'">Ssn</th>
+    <th th:if="${search.Bdate} == 'Bdate'">Bdate</th>
+    <th th:if="${search.Address} == 'Address'">Address</th>
+    <th th:if="${search.Sex} == 'Sex'">Sex</th>
+    <th th:if="${search.Salary} == 'Salary'">Salary</th>
+    <th th:if="${search.Supervisor} == 'Supervisor'">Supervisor</th>
+    <th th:if="${search.Department} == 'Department'">Department</th>
+  </tr>
+
+  <tr th:each="event , index: ${events}">
+    <td><input type="checkbox" name="choice"  onclick="getCheckboxValue(event)" th:value="${event.name} + ',' + ${event.ssn}"></td>
+    <td th:if="${search.name} == 'name'" th:text="${event.Name}">Name</td>
+    <td th:if="${search.ssn} == 'ssn'" th:text="${event.Ssn}">Ssn</td>
+    <td th:if="${search.Bdate} == 'Bdate'" th:text="${event.Bdate}">Bdate</td>
+    <td th:if="${search.Address} == 'Address'" th:text="${event.Address}"> Address</td>
+    <td th:if="${search.Sex} == 'Sex'" th:text="${event.sex}">Sex</td>
+    <td th:if="${search.Salary} == 'Salary'" th:text="${event.Salary}">Salary</td>
+    <td th:if="${search.Supervisor} == 'Supervisor'" th:text="${event.Super_Name}">Supervisor</td>
+    <td th:if="${search.Department} == 'Department'" th:text="${event.Dno}">Department</td>
+  </tr>
+</table>
+<a>선택된 직원:</a>
+<a id='select_name'></a>
+<br>
+<a>인원수:</a>
+<a th:text="${events_size}"></a>
+
+<form action="/api5" class ="update-form" method="post" id="updateSqlIn">
+  <div align="center" >
+    <select name = "update" id="update" onchange="getSelectUpdateValue()">
+      <option value="default">선택</option>
+      <option value="address">주소</option>
+      <option value="sex">성별</option>
+      <option value="salary">연봉</option>
+    </select>
+    <a id="update_select"></a>
+    <a id="update_user"></a>
+    <button type="submit" form="updateSqlIn">UPDATE</button>
+  </div>
+</form>
+
+<form action="/api4" class ="update-form" method="post" id="delSqlIn">
+  <a id="update_user2"></a>
+  <button type="submit" form="delSqlIn" style="float: right;">선택된 데이터 삭제</button>
+</form>
+
+<div class="under-section">
   <form action="/api3" class="insert-form" method="post" id ="sendSqlIn">
     <p class="title">새로운 직원 정보 추가</p>
     <div class="container">
@@ -277,9 +291,12 @@
     </div>
   </form>
 
+
+
+
   <!-- 부서별 월급 일괄수정 -->
   <form action="/api6" class="salary-form" method="post" id ="sendSqlsalary">
-    <p class="title">새로운 직원 정보 추가</p>
+    <p class="title">부서별 월급 일괄수정</p>
     <div class="container">
       <div style ='width: 300px;' >
         <p>Department: </p>
@@ -309,6 +326,36 @@
       <button class="add-btn"  type="submit" form="sendSqlsalary">월급 일괄 수정하기</button>
     </div>
   </form>
+</div>
+
+<div>
+  <form action="/api7" class="dependent-form" id ="sendSqlDependent"method="post">
+    <p class="title">직원별 가족 모두 출력</p>
+    <a id="update_user3"></a>
+    <button type="submit" form="sendSqlDependent">출력 보기</button>
+    <br><br>
+    <table class="dependent-tb">
+      <tr>
+
+        <th >Name</th>
+        <th >Dependent</th>
+        <th >Sex</th>
+        <th >Bdate</th>
+        <th >Relationship</th>
+      </tr>
+
+      <tr th:each="event , index: ${dependents}">
+        <td th:text="${event.Name}">Name</td>
+        <td th:text="${event.Dependent_name}">Dependent</td>
+        <td th:text="${event.Sex}">Sex</td>
+        <td th:text="${event.Bdate}"> Bdate</td>
+        <td th:text="${event.Relationship}">Relationship</td>
+      </tr>
+    </table>
+  </form>
+
+
+</div>
 
 
 </body>

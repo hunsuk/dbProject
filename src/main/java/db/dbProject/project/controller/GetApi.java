@@ -1,6 +1,7 @@
 package db.dbProject.project.controller;
 
 
+import db.dbProject.project.domain.Dependent;
 import db.dbProject.project.domain.EMPLOYEE;
 import db.dbProject.project.dto.*;
 import db.dbProject.project.repository.EMPLOYEERepository;
@@ -70,6 +71,27 @@ public class GetApi {
 
         EMPLOYEErepo.updateAllDnoSalary(update);
         return "redirect:/api1";
+    }
+    @PostMapping(value = "/api7")
+    public String api7(@ModelAttribute Ssn ssn, Model model) throws SQLException {
+        EMPLOYEERepository EMPLOYEErepo = new EMPLOYEERepository();
+        List<EMPLOYEE> employees = new ArrayList<EMPLOYEE>();
+        ArrayList<Dependent> dependents = new ArrayList<Dependent>();
+
+        log.info("ssn_list: :" + ssn.getSsn());
+
+        Search search = new Search("name","ssn","Bdate","Address","Sex","Salary","Supervisor","Department");
+        employees = EMPLOYEErepo.findByAll();
+        dependents = EMPLOYEErepo.search_dependent(ssn.getSsn());
+
+
+
+        model.addAttribute("events" ,employees);
+        model.addAttribute("events_size",employees.size());
+        model.addAttribute("search" ,search);
+        model.addAttribute("dependents",dependents);
+
+        return "/api2";
     }
 
 //    //유저 마이페이지

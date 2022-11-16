@@ -2,6 +2,7 @@ package db.dbProject.project.repository;
 
 
 import db.dbProject.project.DBConnectoinUtil;
+import db.dbProject.project.domain.Dependent;
 import db.dbProject.project.domain.EMPLOYEE;
 import db.dbProject.project.dto.DnoSalary;
 import db.dbProject.project.dto.Insert;
@@ -20,11 +21,46 @@ public class EMPLOYEERepository {
     Calendar cal = new GregorianCalendar();
     Timestamp ts = new Timestamp(cal.getTimeInMillis()); //
 
+
+    public ArrayList<Dependent> search_dependent(String ssn_list) throws SQLException {
+
+        String [] ssn = ssn_list.split(" ");
+        ArrayList<Dependent> dependent_list =  new ArrayList<Dependent>();
+        Connection con = null;
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        for(int i = 0; i < ssn.length; i++){
+            String sql = "select * from DEPENDENT,EMPLOYEE where Ssn = Essn AND Essn = ?";
+            try{
+                con = getConnection();
+                pstm=con.prepareStatement(sql);
+                pstm.setString(1,ssn[i]);
+                rs =pstm.executeQuery();
+                while (rs.next()){
+                    Dependent dependent = new Dependent();
+                    dependent.setName(rs.getString("Fname") +" "+ rs.getString("Minit") +" " +rs.getString("Lname"));
+                    dependent.setDependent_name(rs.getString("Dependent_name"));
+                    dependent.setSex(rs.getString("Sex"));
+                    dependent.setBdate(rs.getDate("Bdate").toString());
+                    dependent.setRelationship(rs.getString("Relationship"));
+                    dependent_list.add(dependent);
+                }
+            }catch(SQLException e) {
+                log.error("db error",e);
+                throw e;
+            } finally {
+                close(con, pstm, null);
+            }
+
+        }
+        return  dependent_list;
+    }
     public void update(Update update) throws SQLException {
         String sql = "update EMPLOYEE set "+update.getUpdate()+"=?, modified=? where Ssn=?";
 
         Connection con = null;
         PreparedStatement pstm = null;
+
         String [] ssn = update.getSsn().split(" ");
 
 
