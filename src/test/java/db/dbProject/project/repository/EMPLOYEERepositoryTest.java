@@ -15,16 +15,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 class EMPLOYEERepositoryTest {
-
-    @Test
-    void findByAll() throws SQLException {
-        List<EMPLOYEE> employees = new ArrayList<EMPLOYEE>();
-
-        EMPLOYEERepository EMPLOYEErepo = new EMPLOYEERepository();
-        employees = EMPLOYEErepo.findByAll();
-
-        Assertions.assertThat(employees.size()).isEqualTo(8);
-    }
+//
+//    @Test
+//    void findByAll() throws SQLException {
+//        List<EMPLOYEE> employees = new ArrayList<EMPLOYEE>();
+//
+//        EMPLOYEERepository EMPLOYEErepo = new EMPLOYEERepository();
+//        employees = EMPLOYEErepo.findByAll();
+//
+//        Assertions.assertThat(employees.size()).isEqualTo(8);
+//    }
     @Test
     void searchDependent() throws SQLException{
 

@@ -31,7 +31,7 @@ public class GetApi {
 
         log.info(search_sub.getInput_search());
         if (search_sub.getRange().equals("default")){
-            employees = EMPLOYEErepo.findByAll();
+            employees = EMPLOYEErepo.findByAll(search);
         }else{
             employees = EMPLOYEErepo.findBySQL(search_sub.getRange(),search_sub.getInput_search());
         }
@@ -42,9 +42,9 @@ public class GetApi {
         return "api2";
     }
     @PostMapping(value = "/api3")
-    public String api3(@ModelAttribute Insert insert,@ModelAttribute Search search, Model model) throws SQLException {
+    public String api3(@ModelAttribute Insert insert, Model model) throws SQLException {
         EMPLOYEERepository EMPLOYEErepo = new EMPLOYEERepository();
-        model.addAttribute("search" ,search);
+//        model.addAttribute("search" ,search);
         EMPLOYEErepo.save(insert);
         return "redirect:/api1";
     }
@@ -81,7 +81,7 @@ public class GetApi {
         log.info("ssn_list: :" + ssn.getSsn());
 
         Search search = new Search("name","ssn","Bdate","Address","Sex","Salary","Supervisor","Department");
-        employees = EMPLOYEErepo.findByAll();
+        employees = EMPLOYEErepo.findByAll(search);
         dependents = EMPLOYEErepo.search_dependent(ssn.getSsn());
 
 

@@ -6,6 +6,7 @@ import db.dbProject.project.domain.Dependent;
 import db.dbProject.project.domain.EMPLOYEE;
 import db.dbProject.project.dto.DnoSalary;
 import db.dbProject.project.dto.Insert;
+import db.dbProject.project.dto.Search;
 import db.dbProject.project.dto.Update;
 import lombok.extern.slf4j.Slf4j;
 
@@ -195,10 +196,44 @@ public class EMPLOYEERepository {
             close(con, pstm, null);
         }
     }
-    public List<EMPLOYEE> findByAll() throws SQLException{
+    public List<EMPLOYEE> findByAll(Search search) throws SQLException{
+//        String search_sql = "select ";
+//
+//        if(search.getName().equals("name")){
+//            search_sql += "e1.Fname, e1.Minit ,e1.Lname";
+//        }
+//
+//        if(search.getSsn().equals("ssn")){
+//            search_sql += " ,e1.Ssn";
+//        }
+//
+//        if(search.getBdate().equals("Bdate")){
+//            search_sql += " ,e1.Bdate";
+//        }
+//
+//        if(search.getAddress().equals("Address")){
+//            search_sql +=  " ,e1.Address";
+//        }
+//
+//        if(search.getSex().equals("Sex")){
+//            search_sql += " ,e1.Sex";
+//        }
+//
+//        if(search.getSalary().equals("Salary")){
+//            search_sql += " ,e1.Salary";
+//        }
+//
+//        if(search.getSupervisor().equals("Supervisor")){
+//            search_sql += " ,e2.Fname Super_Fname ,e2.Minit Super_Minit ,e2.Lname Super_Lname";
+//        }
+//
+//        if(search.getDepartment().equals("Department")){
+//            search_sql += " ,d.Dname ";
+//        }
 
-        String sql = "select e1.Fname, e1.Minit ,e1.Lname, e1.Ssn, e1.Bdate, e1.Address, e1.Sex, e1.Salary, e2.Fname Super_Fname,e2.Minit Super_Minit, e2.Lname Super_Lname, d.Dname " +
-                "from EMPLOYEE e1 LEFT OUTER JOIN EMPLOYEE e2 ON e1.Super_ssn = e2.Ssn, DEPARTMENT d where e1.Dno = d.Dnumber";
+
+        String sql = "select e1.Fname, e1.Minit ,e1.Lname ,e1.Ssn ,e1.Bdate ,e1.Address ,e1.Sex ,e1.Salary ,e2.Fname Super_Fname ,e2.Minit Super_Minit ,e2.Lname Super_Lname ,d.Dname from EMPLOYEE e1 LEFT OUTER JOIN EMPLOYEE e2 ON e1.Super_ssn = e2.Ssn, DEPARTMENT d where e1.Dno = d.Dnumber";
+        log.info(sql);
         Connection con = null;
         PreparedStatement pstm = null;
         ResultSet rs = null;
